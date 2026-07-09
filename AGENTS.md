@@ -9,6 +9,7 @@ Keep source code in `src/`, tests in `tests/`, assets in `assets/`, and contribu
 - `pio run` - build the ESP32 firmware and resolve PlatformIO dependencies.
 - `pio run -t upload` - flash the connected ESP32 board.
 - `pio device monitor -b 115200` - open the serial monitor for boot and sensor diagnostics.
+- `cd android && gradle --no-daemon assembleDebug` - build the Android BLE provisioning app.
 
 ## Coding Style & Naming Conventions
 
