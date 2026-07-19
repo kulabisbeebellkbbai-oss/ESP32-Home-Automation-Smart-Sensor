@@ -195,13 +195,9 @@ void startBleProvisioning() {
     return;
   }
 
-  Serial.println("BLE stage: entering initialization");
   BLEDevice::init((config.deviceName + " setup").c_str());
-  Serial.println("BLE stage: device initialized");
   BLEServer *bleServer = BLEDevice::createServer();
-  Serial.println("BLE stage: server created");
   BLEService *service = bleServer->createService(kProvisioningServiceUuid);
-  Serial.println("BLE stage: service created");
 
   addTextCharacteristic(service, kDeviceNameCharUuid, config.deviceName, new StringWriteCallback(&config.deviceName));
   addTextCharacteristic(service, kWifiSsidCharUuid, config.wifiSsid, new StringWriteCallback(&config.wifiSsid));
@@ -220,14 +216,11 @@ void startBleProvisioning() {
 
   BLECharacteristic *apply = service->createCharacteristic(kApplyCharUuid, BLECharacteristic::PROPERTY_WRITE);
   apply->setCallbacks(new ApplyWriteCallback(status));
-  Serial.println("BLE stage: characteristics configured");
 
   service->start();
-  Serial.println("BLE stage: service started");
   BLEAdvertising *advertising = BLEDevice::getAdvertising();
   advertising->addServiceUUID(kProvisioningServiceUuid);
   advertising->setScanResponse(true);
-  Serial.println("BLE stage: advertising configured");
   BLEDevice::startAdvertising();
   bleRunning = true;
   Serial.println("BLE provisioning started");
